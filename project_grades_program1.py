@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS students(
                s_pe_avg REAL,
                s_pe_grade TEXT,
                s_urdu_avg REAL,
-               s_urdu_grade TEXT
+               s_urdu_grade TEXT,
+               s_overall_avg REAL,
+               s_overall_grade TEXT
 )
 """)
 
@@ -42,7 +44,8 @@ def menu():
     print("3.Search Student GCSE Grades")
     print("4.Delete Student GCSE Grades")
     print("5.Update Student GCSE Grades")
-    print("6.EXIT")
+    print("6.Summary")
+    print("7.EXIT")
 
 def validate_marks(marks_list):
     for mark in marks_list:
@@ -109,7 +112,21 @@ def insert_student():
     history_avg,history_grade = get_subject_marks("GCSE History")
     pe_avg,pe_grade = get_subject_marks("GCSE Physical Education")
     urdu_avg,urdu_grade = get_subject_marks("GCSE Urdu")
-         
+
+    overall_total = (
+        english_lan_avg +
+        english_lit_avg +
+        math_avg +
+        biology_avg +
+        chemistry_avg +
+        physics_avg +
+        geography_avg +
+        history_avg +
+        pe_avg +
+        urdu_avg 
+    )
+    overall_avg = overall_total / 10
+    overall_grade = get_grades(overall_avg)
 
     cursor.execute("""
     INSERT INTO students(
@@ -135,8 +152,10 @@ def insert_student():
                 s_pe_avg,
                 s_pe_grade,
                 s_urdu_avg,
-                s_urdu_grade)
-    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                s_urdu_grade,
+                s_overall_avg,
+                s_overall_grade)
+    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
     """,(id,
         name,
         dob,
@@ -159,7 +178,9 @@ def insert_student():
         pe_avg,
         pe_grade,
         urdu_avg,
-        urdu_grade))
+        urdu_grade,
+        overall_avg,
+        overall_grade))
 
     conn.commit()
     print("Student GCSE grades for all subjects\nsuccessfully added to school database system\n")
@@ -194,11 +215,14 @@ def display_all():
         print(f"GCSE Geography - Average Mark:{student[15]}")
         print(f"GCSE Geography - GRADE:{student[16]}\n")
         print(f"GCSE History - Average Mark:{student[17]}")
-        print(f"GCSE History - GRADE:{student[17]}\n")
-        print(f"GCSE Physical Education - Average Mark:{student[18]}")
-        print(f"GCSE Physical Education - Average Mark:{student[19]}\n")
-        print(f"GCSE Urdu - Average Mark:{student[20]}")
-        print(f"GCSE Urdu - Average Mark:{student[21]}\n")
+        print(f"GCSE History - GRADE:{student[18]}\n")
+        print(f"GCSE Physical Education - Average Mark:{student[19]}")
+        print(f"GCSE Physical Education - GRADE:{student[20]}\n")
+        print(f"GCSE Urdu - Average Mark:{student[21]}")
+        print(f"GCSE Urdu - GRADE:{student[22]}\n")
+        print("***************************************\n")
+        print(f"Overall GCSE Average Mark:{student[23]}")
+        print(f"Overall GCSE Grade:{student[24]}")
 
 def search_student():
     print("\n---SEARCH FOR A STUDENT---")
@@ -214,8 +238,29 @@ def search_student():
     if student:
         print(f"Student Name:{student[1]}")
         print(f"DOB:{student[2]}")
-        print(f"Average Mark:{student[3]}")
-        print(f"Grade:{student[4]}")
+        print(f"GCSE English Language - Average Mark:{student[3]}")
+        print(f"GCSE English Language - GRADE:{student[4]}\n")
+        print(f"GCSE English Literature - Average Mark:{student[5]}")
+        print(f"GCSE English Literature - GRADE:{student[6]}\n")
+        print(f"GCSE Mathematics - Average Mark:{student[7]}")
+        print(f"GCSE Mathematics - GRADE:{student[8]}\n")
+        print(f"GCSE Biology - Average Mark:{student[9]}")
+        print(f"GCSE Biology - GRADE:{student[10]}\n")
+        print(f"GCSE Chemistry - Average Mark:{student[11]}")
+        print(f"GCSE Chemistry - GRADE:{student[12]}\n")
+        print(f"GCSE Physics - Average Mark:{student[13]}")
+        print(f"GCSE Physics - GRADE:{student[14]}\n")
+        print(f"GCSE Geography - Average Mark:{student[15]}")
+        print(f"GCSE Geography - GRADE:{student[16]}\n")
+        print(f"GCSE History - Average Mark:{student[17]}")
+        print(f"GCSE History - GRADE:{student[18]}\n")
+        print(f"GCSE Physical Education - Average Mark:{student[19]}")
+        print(f"GCSE Physical Education - Average Mark:{student[20]}\n")
+        print(f"GCSE Urdu - Average Mark:{student[21]}")
+        print(f"GCSE Urdu - Average Mark:{student[22]}\n")
+        print("*****************************************")
+        print(f"Overall GCSE Average Mark:{student[23]}")
+        print(f"Overall GCSE Grade:{student[24]}")
     else:
         print("Search failed, student not found")
 
@@ -232,8 +277,30 @@ def delete_student():
         print(f"Student ID:{student[0]}")
         print(f"Student Name:{student[1]}")
         print(f"DOB:{student[2]}")
-        print(f"Average Mark:{student[3]}")
-        print(f"Grade:{student[4]}")
+        print(f"GCSE English Language - Average Mark:{student[3]}")
+        print(f"GCSE English Language - GRADE:{student[4]}\n")
+        print(f"GCSE English Literature - Average Mark:{student[5]}")
+        print(f"GCSE English Literature - GRADE:{student[6]}\n")
+        print(f"GCSE Mathematics - Average Mark:{student[7]}")
+        print(f"GCSE Mathematics - GRADE:{student[8]}\n")
+        print(f"GCSE Biology - Average Mark:{student[9]}")
+        print(f"GCSE Biology - GRADE:{student[10]}\n")
+        print(f"GCSE Chemistry - Average Mark:{student[11]}")
+        print(f"GCSE Chemistry - GRADE:{student[12]}\n")
+        print(f"GCSE Physics - Average Mark:{student[13]}")
+        print(f"GCSE Physics - GRADE:{student[14]}\n")
+        print(f"GCSE Geography - Average Mark:{student[15]}")
+        print(f"GCSE Geography - GRADE:{student[16]}\n")
+        print(f"GCSE History - Average Mark:{student[17]}")
+        print(f"GCSE History - GRADE:{student[18]}\n")
+        print(f"GCSE Physical Education - Average Mark:{student[19]}")
+        print(f"GCSE Physical Education - GRADE:{student[20]}\n")
+        print(f"GCSE Urdu - Average Mark:{student[21]}")
+        print(f"GCSE Urdu - GRADE:{student[22]}\n")
+        print("****************************************\n")
+        print(f"Overall GCSE Average Mark:{student[23]}")
+        print(f"Overall GCSE Grade:{student[24]}")
+
     
         delete = input("Are you sure, you want to delete:Y/N?\n").lower()
         if delete == "y":
@@ -269,6 +336,21 @@ def update_student():
     pe_avg,pe_grade = get_subject_marks("GCSE Physical Education")
     urdu_avg,urdu_grade = get_subject_marks("GCSE Urdu")
 
+    overall_total = (
+        english_lan_avg +
+        english_lit_avg +
+        math_avg +
+        biology_avg +
+        chemistry_avg +
+        physics_avg +
+        geography_avg +
+        history_avg +
+        pe_avg +
+        urdu_avg
+    )
+    overall_avg = overall_total / 10
+    overall_grade = get_grades(overall_avg)
+
     cursor.execute("""
     UPDATE students
     SET s_id = ?,
@@ -293,7 +375,9 @@ def update_student():
         s_pe_avg = ?,
         s_pe_grade = ?,
         s_urdu_avg = ?,
-        s_urdu_grade =?
+        s_urdu_grade = ?,
+        s_overall_avg  = ?,
+        s_overall_grade = ?
     WHERE s_id = ?
     """,(new_id,
         new_name,
@@ -318,6 +402,8 @@ def update_student():
         pe_grade,
         urdu_avg,
         urdu_grade,
+        overall_avg,
+        overall_grade,
         old_id))
 
     conn.commit()
@@ -326,6 +412,35 @@ def update_student():
         print("Student sucessfully updated on school database system")
     else:
         print("Student unmatched, re-enter correct student name to update")
+
+def summary():
+    cursor.execute("SELECT * FROM students")
+    rows = cursor.fetchall()
+
+    if len(rows) == 0:
+        print("Student not found")
+        return
+    
+    highest_student = None 
+    lowest_student = None 
+
+    for student in rows:
+        if highest_student is None or student[23] > highest_student:
+            highest_student = student
+        
+        if lowest_student is None or student[23] < lowest_student:
+            lowest_student = student
+
+    print("\n---SUMMARY")
+    print(f"Highest Student:{highest_student[1]}")
+    print(f"Highest Average:{highest_student[23]:.2f}")
+    print(f"Highest Grade:{highest_student[24]}")
+
+    print()
+    print(f"Lowest Student:{lowest_student[1]}")
+    print(f"Lowest Average:{lowest_student[23]:.2f}")
+    print(f"Lowest Grade:{lowest_student[24]}")
+
     
 def choices():
     while True:
@@ -341,7 +456,9 @@ def choices():
             delete_student()
         elif select == "5":
             update_student()
-        elif select == "5":
+        elif select == "6":
+            summary()
+        elif select == "7":
             print("Goodbye\n")
             break
         else:
