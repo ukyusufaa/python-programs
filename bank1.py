@@ -27,7 +27,9 @@ def menu():
     print("1.Create Account")
     print("2.Search Account")
     print("3.Deposit Money")
-    print("4.Exit")
+    print("4.Withdraw Money")
+    print("5.Delete Account")
+    print("6.Exit")
 
 def account_number(rows):
     present_account_no = 1001
@@ -167,7 +169,7 @@ def deposit_money():
                 continue 
     else:
         print("\n" + "+" + "-" *40 + "+")
-        print("No Money was deposited".center(40))
+        print("No Money Deposited".center(40))
         print("+" + "-" *40 + "+")
         print()
         return
@@ -177,7 +179,7 @@ def deposit_money():
     cursor.execute("""
     UPDATE accounts
     SET b_balance = ?
-    WHERE  b_account_number = ?
+    WHERE b_account_number = ?
     """,(new_balance,account_no))
 
     conn.commit()
@@ -196,6 +198,133 @@ def deposit_money():
     print(f"Current Balance:£{new_balance:.2f}")
     print("=" *100)
 
+def validate_withdraw(withdraw):
+    if withdraw <= 0:
+        return False
+    return True
+
+def validate_withdraw_amount(withdraw,row):
+        if withdraw > row[3]:
+            return False
+        return True
+
+def withdraw_money():
+    print("Withdraw Money")
+    account_no = int(input("Enter account number: "))
+
+    cursor.execute("""
+    SELECT * FROM accounts
+    WHERE b_account_number = ?
+    """,(account_no,))
+
+    row = cursor.fetchone()
+
+    if not row:
+        print("\n" + "+" + "-" *40 + "+")
+        print("Account not found".center(40))
+        print("+" + "-" *40 + "+")
+        return
+    
+    answer = input("Do you want to withdraw money?(y/n)").lower()
+    if answer == "y":
+        while True:
+            try:
+                amount_withdrawn = float(input("How much would you like to withdrwaw?"))
+                xyz = validate_withdraw(amount_withdrawn)
+                abc = validate_withdraw_amount(amount_withdrawn,row)
+                if xyz != False and abc != False:
+                    new_balance = row[3] - amount_withdrawn
+                    break
+                else:
+                    print("Minimum withdraw 1 pence and withdraw cannot exceed current balance")
+                    continue
+            except ValueError:
+                print("Enter withdrawal amount in numbers & decimals NOT characters!")
+                continue
+    else:
+        print("\n" + "+" + "-" *40 + "+")
+        print("No Money Withdrwan".center(40))
+        print("+" + "-" *40 + "+")
+        print()
+        return
+    
+    cursor.execute("""
+    UPDATE accounts
+    SET b_balance = ?
+    WHERE b_account_number = ?
+    """,(new_balance,account_no))
+
+    conn.commit()
+
+    print("\n" + "=" *40)
+    print("METRO BANK".center(40))
+    print("=" *40)
+    print()
+    from datetime import datetime
+    now = datetime.now()
+    print("\n",now)
+    print()
+    print("=" *100)
+    print(f"Account Number:{row[1]}")
+    print(f"Account Holder Name:{row[2]}")
+    print(f"Current Balance:£{new_balance:.2f}")
+    print("=" *100)
+
+def validate_delete_account(row):
+    if row[3] != 0:
+        return False
+    return True
+
+def delete_account():
+    print("Delete Account")
+    account_no = int(input("Enter account number: "))
+
+    cursor.execute("""
+    SELECT * FROM accounts
+    WHERE b_account_number = ?
+    """,(account_no,))
+
+    row = cursor.fetchone()
+
+    if not row:
+        print("\n" + "+" + "-" *40 + "+")
+        print("Account not found".center(40))
+        print("+" + "-" *40 + "+")
+        return
+    else:
+        print("\n" + "=" *40)
+        print("METRO BANK".center(40))
+        print("=" *40)
+        print()
+        from datetime import datetime
+        now = datetime.now()
+        print("\n",now)
+        print()
+        print("=" *100)
+        print(f"Account Number:{row[1]}")
+        print(f"Account Holder Name:{row[2]}")
+        print(f"Current Balance:£{row[3]:.2f}")
+        print("=" *100)
+    
+    answer = input("Do you want to delete account?(y/n)").lower()
+    if answer == "y":
+        xyz = validate_delete_account(row)
+        if xyz != False:
+            cursor.execute("""
+            DELETE FROM accounts
+            WHERE b_account_number = ?
+            """,(account_no,))
+
+            conn.commit()
+
+            print("Account sucessfully deleted")
+            input("Press Enter to continue.....")
+            return
+        else:
+            print("Withdraw all money before deleting account!")
+            input("Press Enter to continue.....")
+            return
+        
 def choices():
     while True:
         menu()
@@ -207,6 +336,10 @@ def choices():
         elif answer == "3":
             deposit_money()
         elif answer == "4":
+            withdraw_money()
+        elif answer == "5":
+            delete_account()
+        elif answer == "6":
             print("Goodbye customer")
         else:
             print("Invalid")
