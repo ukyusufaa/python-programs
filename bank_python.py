@@ -279,21 +279,20 @@ def delete_account(bank):
                 return
 
 def display_all_accounts(bank):
-    for customer in bank:
-        if not bank:
-            print("\n" + "+" + "-" *40 + "+")
-            print("Account Not Deleted".center(40))
-            print("+" + "-" *40 + "+")
-            print()
-            return
-        else:
-            print()
-            print("=" *100)
-            print(f"Account Number:{customer['Account Number']}")
-            print(f"Account Holder Name:{customer['Customer Name']}")
-            print(f"Current Balance:£{customer['Account Balance']:.2f}")
-            print("=" *100)
+    if not bank:
+        print("\n" + "+" + "-" *40 + "+")
+        print("Account Not Deleted".center(40))
+        print("+" + "-" *40 + "+")
+        print()
         return
+    for customer in bank:
+        print()
+        print("=" *100)
+        print(f"Account Number:{customer['Account Number']}")
+        print(f"Account Holder Name:{customer['Customer Name']}")
+        print(f"Current Balance:£{customer['Account Balance']:.2f}")
+        print("=" *100)
+    return
            
 def choices(bank):
     while True:
