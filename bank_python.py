@@ -11,6 +11,7 @@ def menu():
     print()
     print("1.Create Account")
     print("2.Search Account")
+    
     print("3.Deposit Money")
     print("4.Withdraw Money")
     print("5.Delete Account")
@@ -71,20 +72,19 @@ def create_account(bank):
         "Account Number":account_no
     })
 
-    for info in bank:
-        print("\n" + "=" *40)
-        print("METRO BANK".center(40))
-        print("=" *40)
-        print()
-        from datetime import datetime
-        now = datetime.now()
-        print("\n",now)
-        print()
-        print("=" *100)
-        print(f"Account Number:{info['Account Number']}")
-        print(f"Account Holder Name:{info['Customer Name']}")
-        print(f"Current Balance:£{info['Account Balance']:.2f}")
-        print("=" *100)
+    print("\n" + "=" *40)
+    print("METRO BANK".center(40))
+    print("=" *40)
+    print()
+    from datetime import datetime
+    now = datetime.now()
+    print("\n",now)
+    print()
+    print("=" *100)
+    print(f"Account Number:{account_no}")
+    print(f"Account Holder Name:{customer_name}")
+    print(f"Current Balance:£{balance:.2f}")
+    print("=" *100)
 
 def search_account(bank):
     print("Search An Account")

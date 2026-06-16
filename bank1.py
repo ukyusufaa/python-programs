@@ -247,6 +247,8 @@ def withdraw_money():
         print("+" + "-" *40 + "+")
         print()
         return
+
+    new_balance = row[3] - amount_withdrawn
     
     cursor.execute("""
     UPDATE accounts
