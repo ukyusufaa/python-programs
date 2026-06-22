@@ -60,9 +60,9 @@ def create_account(bank):
 
     while True:
         try:
-            deposit = float(input("Deposit:"))
+            deposit = float(input("Deposit:£"))
             if not opening_deposit_validation(deposit):
-                print("Deopsit no less than £50 to open an account")
+                print("Deposit no less than £50 to open an account")
                 continue 
             break
         except ValueError:
@@ -78,7 +78,7 @@ def create_account(bank):
     })
     
     print(f"Name:{name}")
-    print(f"Deposit:{deposit}")
+    print(f"Deposit:£{deposit:.2f}")
     print(f"Account Number:{account_no}")
     return
 
@@ -89,7 +89,7 @@ def search_account(bank):
     for customer in bank:
         if account_no == customer["Account Number"]:
             print(f"Name:{customer['Name']}")
-            print(f"Balance:{customer['Balance']}")
+            print(f"Balance:£{customer['Balance']:.2f}")
             print(f"Account Number:{customer['Account Number']}")
             return
     print("Account not found")
@@ -100,11 +100,11 @@ def deposit_money(bank):
     for customer in bank:
         if account_no == customer["Account Number"]:
             print(f"Name:{customer['Name']}")
-            print(f"Balance:{customer['Balance']}")
+            print(f"Balance:£{customer['Balance']:.2f}")
             print(f"Account Number:{customer['Account Number']}")
         while True:
             try:
-                deposit = float(input("Deposit:"))
+                deposit = float(input("Deposit:£"))
                 if not minimum_deposit(deposit):
                     print("You cannot deposit less than 1p")
                     continue 
@@ -115,7 +115,7 @@ def deposit_money(bank):
         new_balance = customer["Balance"] + deposit
         customer["Balance"] = new_balance
         print(f"Name:{customer['Name']}")
-        print(f"Balance:{new_balance}")
+        print(f"Balance:£{new_balance:.2f}")
         print(f"Account Number:{customer['Account Number']}")
 
 def withdraw_money(bank):
@@ -123,11 +123,11 @@ def withdraw_money(bank):
     for customer in bank:
         if account_no == customer["Account Number"]:
             print(f"Name:{customer['Name']}")
-            print(f"Balance:{customer['Balance']}")
+            print(f"Balance:£{customer['Balance']:.2f}")
             print(f"Account Number:{customer['Account Number']}")
         while True:
             try:
-                withdraw = float(input("Withdrawal amount:"))
+                withdraw = float(input("Withdrawal amount:£"))
                 if not maximum_withdraw(withdraw,customer['Balance']):
                     print("You cannot withdraw more than the balance")
                     continue 
@@ -138,7 +138,7 @@ def withdraw_money(bank):
         new_balance = customer["Balance"] - withdraw
         customer["Balance"] = new_balance
         print(f"Name:{customer['Name']}")
-        print(f"Balance:{new_balance}")
+        print(f"Balance:£{new_balance:.2f}")
         print(f"Account Number:{customer['Account Number']}")
 
 def delete_account(bank):
@@ -146,7 +146,7 @@ def delete_account(bank):
     for customer in bank:
         if account_no == customer["Account Number"]:
             print(f"Name:{customer['Name']}")
-            print(f"Balance:{customer['Balance']}")
+            print(f"Balance:£{customer['Balance']:.2f}")
             print(f"Account Number:{customer['Account Number']}")
             answer = input("Are you sure you want to delete the bank account?").lower()
             if answer == "y":
@@ -167,7 +167,7 @@ def display_all_accounts(bank):
         return
     for customer in bank:
         print(f"Name:{customer['Name']}")
-        print(f"Balance:{customer['Balance']}")
+        print(f"Balance:£{customer['Balance']:.2f}")
         print(f"Account Number:{customer['Account Number']}")
     return
 

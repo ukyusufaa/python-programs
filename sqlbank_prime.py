@@ -134,7 +134,7 @@ def search_account():
         return
     else:
         print(f"Name:{rows[1]}")
-        print(f"Balance:{rows[2]}")
+        print(f"Balance:£{rows[2]:.2f}")
         print(f"Account Number:{rows[3]}")
     return
     
@@ -152,7 +152,7 @@ def deposit_money():
         return
 
     print(f"Name:{rows[1]}")
-    print(f"Balance:{rows[2]}")
+    print(f"Balance:£{rows[2]:.2f}")
     print(f"Account Number:{rows[3]}")
     
     while True:
@@ -176,7 +176,7 @@ def deposit_money():
     conn.commit()
 
     print(f"Name:{rows[1]}")
-    print(f"Balance:{new_balance}")
+    print(f"Balance:£{new_balance:.2f}")
     print(f"Account Number:{rows[3]}")
 
 def withdraw_money():
@@ -193,7 +193,7 @@ def withdraw_money():
         return
 
     print(f"Name:{rows[1]}")
-    print(f"Balance:{rows[2]}")
+    print(f"Balance:£{rows[2]:.2f}")
     print(f"Account Number:{rows[3]}")
 
     while True:
@@ -220,7 +220,7 @@ def withdraw_money():
     conn.commit()
 
     print(f"Name:{rows[1]}")
-    print(f"Balance:{new_balance}")
+    print(f"Balance:£{new_balance:.2f}")
     print(f"Account Number:{rows[3]}")
 
 def delete_account():
@@ -237,7 +237,7 @@ def delete_account():
         print("Account Not Found")
     else:
         print(f"Name:{rows[1]}")
-        print(f"Balance:{rows[2]}")
+        print(f"Balance:£{rows[2]:.2f}")
         print(f"Account Number:{rows[3]}")
     answer = input("Are you sure you want to delete the bank account?").lower()
     if answer == "y":
@@ -270,7 +270,7 @@ def display_all_accounts():
     
     for customer in rows:
         print(f"Name:{customer[1]}")
-        print(f"Balance:{customer[2]}")
+        print(f"Balance:£{customer[2]:.2f}")
         print(f"Account Number:{customer[3]}")
     return
 
