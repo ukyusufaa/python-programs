@@ -194,7 +194,7 @@ def withdraw_money(bank):
             if answer == "y":
                 while True:
                     try:
-                        amount_withdrawn = float(input("How much would you like to withdrwaw?"))
+                        amount_withdrawn = float(input("How much would you like to withdrawn?"))
                         xyz = validate_withdraw(amount_withdrawn)
                         abc = validate_withdraw_amount(amount_withdrawn,customer["Account Balance"])
                         if xyz != False and abc != False:
@@ -264,11 +264,11 @@ def delete_account(bank):
                 xyz = validate_delete_account(customer["Account Balance"])
                 if xyz != False:
                     bank.remove(customer)
-                    print("Account sucessfully deleted")
+                    print("Account successfully deleted")
                     input("Press Enter to continue.....")
                     return
                 else:
-                    print("Withdraw all money before deleting account!")
+                    print("Withdrawn all money before deleting account!")
                     input("Press Enter to continue.....")
                     return
             else:
@@ -281,7 +281,7 @@ def delete_account(bank):
 def display_all_accounts(bank):
     if not bank:
         print("\n" + "+" + "-" *40 + "+")
-        print("Account Not Deleted".center(40))
+        print("No accounts found".center(40))
         print("+" + "-" *40 + "+")
         print()
         return
@@ -312,6 +312,7 @@ def choices(bank):
             display_all_accounts(bank)
         elif answer == "7":
             print("Goodbye customer")
+            break 
         else:
             print("Invalid")
 all_clients = []

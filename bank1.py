@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("yusuf.db")
+conn = sqlite3.connect("bank.db")
 
 cursor = conn.cursor()
 
@@ -343,6 +343,7 @@ def choices():
             delete_account()
         elif answer == "6":
             print("Goodbye customer")
+            break
         else:
             print("Invalid")
 

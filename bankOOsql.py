@@ -319,6 +319,8 @@ def transfer_money():
         WHERE b_account_no = ?
         """,(data1.balance,account_noA,))
 
+        conn.commit()
+
         data1.show_details()
 
     account_noB = int(input("To account number:"))
@@ -367,6 +369,7 @@ def choices():
             transfer_money()
         elif decision =="8":
             print("Goodbye")
+            break 
         else:
             print("Invalid option")
 choices()

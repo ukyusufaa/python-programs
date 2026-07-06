@@ -29,13 +29,17 @@ class BankAccount:
         if self.account == "Current":
             if self.balance - amount < -100:
                 print("Current Account Balance cannot go below -£100")
+                return False
             else:
                 self.balance = self.balance - amount
+                return True
         elif self.account == "Savings":
             if self.balance - amount < 100:
                 print("Savings Account  Balance cannot go below £100")
+                return False
             else:
                 self.balance = self.balance - amount
+                return True
 
 
 def validate_name(name):
@@ -170,22 +174,38 @@ def withdraw_account(bank):
         print("Account not found")
 
 def transfer_money(bank):
+    found1 = False
+    sender = None
     account_noA = int(input("From account number:"))
     for account in bank:
         if account_noA == account.account_no:
+            found1 = True
             account.show_details()
-            transfer = float(input("Transfer amount:"))
-            account.withdraw(transfer)
-        else:
-            print("Account not found")
-
-            account_noB = int(input("To account number:"))
-            for account in bank:
-                if account_noB == account.account_no:
-                    account.deposit(transfer)
-                else:
-                    print("Account not found")
-                
+            sender = account
+    if found1 == False:
+        print("Account not found")
+        return
+    
+    found2 = False
+    receiver = None
+    account_noB = int(input("To account number:"))
+    for account in bank:
+        if account_noB == account.account_no:
+            found2 = True
+            account.show_details()
+            receiver = account
+    if found2 == False:
+        print("Account not found")
+    
+    transfer = float(input("Transfer amount:"))
+    
+    if sender.withdraw(transfer):
+        receiver.deposit(transfer)
+        sender.show_details()
+        receiver.show_details()
+    else:
+        print("Transfer unsuccessful")
+   
 def choices(bank):
     while True:
         menu()
@@ -206,6 +226,7 @@ def choices(bank):
             transfer_money(bank)
         elif decision =="8":
             print("Goodbye")
+            break
         else:
             print("Invalid option")
 bank = []
