@@ -1,0 +1,26 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# VS Code settings
+.vscode/
+
+# macOS
+.DS_Store
+
+# Linux temporary files
+*~
+
+# Log files
+*.log
