@@ -1,1 +1,0 @@
-print("Aslamu Alay Kum Yusuf, Walay Kum Asalam")
