@@ -25,22 +25,10 @@ CREATE TABLE IF NOT EXISTS medication(
 """)
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS next_of_kin(
-               kin_id INTEGER PRIMARY KEY AUTOINCREMENT,
-               first_name TEXT NOT NULL,
-               surname TEXT NOT NULL,
-               address TEXT NOT NULL,
-               phone TEXT NOT NULL,
-               patient_id INTEGER,
-               FOREIGN KEY(patient_id)
-               REFERENCES patient(patient_id))
-
-""")
-
-cursor.execute("""
 CREATE TABLE IF NOT EXISTS gp(
                gp_id INTEGER PRIMARY KEY AUTOINCREMENT,
-               full_name TEXT NOT NULL,
+               first_name TEXT NOT NULL,
+               surname TEXT NOT NULL,
                surgery_id INTEGER,
                FOREIGN KEY(surgery_id)
                REFERENCES gp_surgery(surgery_id))
@@ -61,7 +49,8 @@ CREATE TABLE IF NOT EXISTS patient(
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS consultant(
                consultant_id INTEGER PRIMARY KEY AUTOINCREMENT,
-               full_name TEXT NOT NULL,
+               first_name TEXT NOT NULL,
+               surname TEXT NOT NULL,
                department_id INTEGER,
                FOREIGN KEY(department_id)
                REFERENCES department(department_id))
@@ -73,8 +62,9 @@ CREATE TABLE IF NOT EXISTS appointment(
                patient_id INTEGER,
                appointment_date TEXT NOT NULL,
                appointment_time TEXT NOT NULL,
-               appointment_status TEXT NOT NULL,
                consultant_id INTEGER,
+               FOREIGN KEY(patient_id)
+               REFERENCES patient(patient_id),
                FOREIGN KEY(consultant_id)
                REFERENCES consultant(consultant_id))
 """)
