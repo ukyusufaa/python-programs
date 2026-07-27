@@ -18,7 +18,7 @@ class Department():
         return True
     
     def validate_id_input(self,number):
-            if number <= 1:
+            if number < 1:
                 return False
             return True          
 
@@ -83,7 +83,7 @@ class Department():
             try:
                 department_id = int(input("Department ID:"))
                 if not self.validate_id_input(department_id):
-                    print("Department ID - must be greater than 1")
+                    print("Department ID - must be greater than 0")
                     continue 
                 break
             except ValueError:
@@ -117,7 +117,7 @@ class Department():
             try:
                 department_id = int(input("Department ID:"))
                 if not self.validate_id_input(department_id):
-                    print("Department ID - must be greater than 1")
+                    print("Department ID - must be greater than 0")
                     continue 
                 break 
             except ValueError:
@@ -182,7 +182,7 @@ class Department():
                 try:
                     department_id = int(input("Department ID:"))
                     if not self.validate_id_input(department_id):
-                        print("Department ID - must be greater than 1")
+                        print("Department ID - must be greater than 0")
                         continue 
                     break 
                 except ValueError:

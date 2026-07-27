@@ -25,7 +25,7 @@ class Gp:
             return True
 
     def validate_login_digits(self,number):
-            if number <=1:
+            if number < 1:
                 return False
             return True
         
@@ -59,7 +59,7 @@ class Gp:
             try:
                 self.surgery_id = int(input("Surgery ID: "))
                 if not self.validate_login_digits(self.surgery_id):
-                    print("Surgery ID must be greater than 1")
+                    print("Surgery ID must be greater than 0")
                     continue
                 break 
             except ValueError:
@@ -130,7 +130,7 @@ class Gp:
             try:
                 gp_id = int(input("GP ID:"))
                 if not self.validate_login_digits(gp_id):
-                    print("GP ID must be greater than 1")
+                    print("GP ID must be greater than 0")
                     continue
                 break 
             except ValueError:
@@ -165,7 +165,7 @@ class Gp:
             try:
                 gp_id = int(input("GP ID:"))
                 if not self.validate_login_digits(gp_id):
-                    print("GP ID must be greater than 1")
+                    print("GP ID must be greater than 0")
                     continue
                 break 
             except ValueError:
@@ -258,7 +258,7 @@ class Gp:
             try:
                 gp_id = int(input("GP ID:"))
                 if not self.validate_login_digits(gp_id):
-                    print("GP ID must be greater than 1")
+                    print("GP ID must be greater than 0")
                     continue
                 break 
             except ValueError:

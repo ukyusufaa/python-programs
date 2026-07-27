@@ -20,7 +20,7 @@ class GpSurgery:
         return True
     
     def validate_id_input(self,number):
-        if number <= 1:
+        if number < 1:
             return False
         return True
     
@@ -116,7 +116,7 @@ class GpSurgery:
             try:
                 surgery_id = int(input("Surgery ID:"))
                 if not self.validate_id_input(surgery_id):
-                    print("Surgery ID - must be greater than 1")
+                    print("Surgery ID - must be greater than 0")
                     continue 
                 break
             except ValueError:
@@ -148,7 +148,7 @@ class GpSurgery:
             try:
                 surgery_id = int(input("Surgery ID:"))
                 if not self.validate_id_input(surgery_id):
-                    print("Surgery ID - must be greater than 1")
+                    print("Surgery ID - must be greater than 0")
                     continue 
                 break
             except ValueError:
@@ -245,6 +245,9 @@ class GpSurgery:
             try:
                 if surgery_id == "":
                     print("Surgery ID - Do not leave blank!")
+                    continue 
+                if not self.validate_id_input(surgery_id):
+                    print("Surgery ID must greater than 0")
                     continue 
                 break
             except ValueError:

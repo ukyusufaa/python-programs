@@ -14,7 +14,7 @@ class Medication():
         print(f"Cost:{self.cost}")
     
     def validate_login_id(self,number):
-        if number <= 1:
+        if number < 1:
             return False
         return True
     
@@ -98,7 +98,7 @@ class Medication():
             try:
                 medication_id = int(input("Medication ID:"))
                 if not self.validate_login_id(medication_id):
-                    print("Medication ID - must be greater than 1")
+                    print("Medication ID - must be greater than 0")
                     continue 
                 break 
             except ValueError:
@@ -132,7 +132,7 @@ class Medication():
             try:
                 medication_id = int(input("Medication ID:"))
                 if not self.validate_login_id(medication_id):
-                    print("Medication ID - must be greater than 1")
+                    print("Medication ID - must be greater than 0")
                     continue 
                 break 
             except ValueError:
@@ -211,7 +211,7 @@ class Medication():
             try:
                 medication_id = int(input("Medication ID:"))
                 if not self.validate_login_id(medication_id):
-                    print("Medication ID - must be greater than 1")
+                    print("Medication ID - must be greater than 0")
                     continue 
                 break 
             except ValueError:

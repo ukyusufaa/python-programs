@@ -28,7 +28,7 @@ class Patient():
         return True
     
     def validate_login_digits(self,number):
-        if number <=1:
+        if number < 1:
             return False
         return True
     
@@ -170,7 +170,7 @@ class Patient():
                 try:
                     self.gp_id = int(input("GP ID:"))
                     if not self.validate_login_digits(self.gp_id):
-                        print("GP ID must be greater than 1")
+                        print("GP ID must be greater than 0")
                         continue
                 except ValueError:
                     print("For GP ID use only numbers")
@@ -249,7 +249,7 @@ class Patient():
             try:
                 patient_id = int(input("Patient ID:"))
                 if not self.validate_login_digits(patient_id):
-                    print("Patient ID must be greater than 1")
+                    print("Patient ID must be greater than 0")
                     continue
                 break 
             except ValueError:
@@ -286,7 +286,7 @@ class Patient():
             try:
                 patient_id = int(input("Patient ID:"))
                 if not self.validate_login_digits(patient_id):
-                    print("Patient ID must be greater than 1")
+                    print("Patient ID must be greater than 0")
                     continue
                 break 
             except ValueError:
@@ -462,7 +462,7 @@ class Patient():
                                 try:
                                     updated_gp_id = int(input("GP ID:"))
                                     if not self.validate_login_digits(updated_gp_id):
-                                        print("GP ID must be greater than 1")
+                                        print("GP ID must be greater than 0")
                                         continue 
                                 
                                 except ValueError:
@@ -520,11 +520,11 @@ class Patient():
             try:
                 patient_id = int(input("Patient ID:"))
                 if not self.validate_login_digits(patient_id):
-                    print("GP ID must be greater than 1")
+                    print("GP ID must be greater than 0")
                     continue
                 break 
             except ValueError:
-                print("GP ID must be greater than 1")
+                print("GP ID must be numbers")
                 continue
 
         try:

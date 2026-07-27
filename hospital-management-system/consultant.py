@@ -118,10 +118,11 @@ class Consultant():
             try:
                 consultant_id = int(input("Consultant ID:"))
                 if not self.validate_login_id(consultant_id):
+                    print("Consultant ID must be greater than 0")
                     continue 
                 break 
             except ValueError:
-                print("Invalid input - Enter Consultant ID in numerics")
+                print("For Consultant ID use numbers")
                 continue 
         try:
             cursor.execute("""
@@ -152,7 +153,7 @@ class Consultant():
             try:
                 consultant_id = int(input("Consultant ID:"))
                 if not self.validate_login_id(consultant_id):
-                    print("Consultant ID must be greater than 1")
+                    print("Consultant ID must be greater than 0")
                     continue 
                 break 
             except ValueError:
@@ -213,6 +214,7 @@ class Consultant():
                     try:
                         updated_department_id = int(input("Department ID:"))
                         if not self.validate_login_id(updated_department_id):
+                            print("Department ID must be greater than 0")
                             continue
                         break
     
@@ -247,7 +249,7 @@ class Consultant():
             try:
                 consultant_id = int(input("Consultant ID:"))
                 if not self.validate_login_id(consultant_id):
-                    print("Consultant ID must be greater than 1")
+                    print("Consultant ID must be greater than 0")
                     continue 
                 break 
             except ValueError:
@@ -277,8 +279,9 @@ class Consultant():
             specialist.show_details_consultant()
 
             while True:
-                delete = input("Are you sure you want to delete?").lower()
+                delete = input("Are you sure you want to delete(Y/N)?").lower()
                 if not self.validate_yes_no(delete):
+                    print("Enter either Y or N to proceeed")
                     continue 
                 if delete == "n":
                     print("Consultant deletion aborted")
