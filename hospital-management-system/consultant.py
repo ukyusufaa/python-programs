@@ -34,22 +34,22 @@ class Consultant():
     
     def create_consultant(self):
         while True:
-            self.first_name = input("First Name:")
+            self.first_name = input("Consultant First Name:")
             if self.first_name == "":
-                print("Invalid input")
+                print("Consultant First Name - Do not leave blank")
                 continue 
             if not self.validate_name(self.first_name):
-                print("Invalid input")
+                print("Consultant First Name - Use alphabet & if required tap space bar")
                 continue 
             break 
 
         while True:
-            self.surname = input("Last Name:")
+            self.surname = input("Consultant Last Name:")
             if self.surname == "":
-                print("Invalid input")
+                print("Consultant Last Name - Do not leave blank")
                 continue 
             if not self.validate_name(self.surname):
-                print("Invalid input")
+                print("Consultant Last Name - Use alphabet & if required tap space bar:")
                 continue 
             break 
         
@@ -57,10 +57,11 @@ class Consultant():
             try:
                 self.department_id = int(input("Department ID:"))
                 if not self.validate_login_id(self.department_id):
+                    print("Department ID must be greater than 1")
                     continue 
                 break 
             except ValueError:
-                print("Invalid input - Enter Department ID numerically only!")
+                print("For Department ID use only numbers")
                 continue
         
         specialist = Consultant(
@@ -79,19 +80,23 @@ class Consultant():
             """,(specialist.first_name,specialist.surname,specialist.department_id))
 
             conn.commit()
-            print("Consultant inserted successfully")
-
-        except sqlite3.IntegrityError:
-            print("Department ID non existant - Consultant not inserted")
+        except sqlite3.Error as e:
+            print("Database Error", e)
             return
 
+        print("Consultant inserted successfully")
         row = cursor.lastrowid
         print(row)
         self.show_details_consultant()
         return
     
     def display_all_consultants(self):
-        cursor.execute("SELECT * FROM consultant")
+        try:
+            cursor.execute("SELECT * FROM consultant")
+
+        except sqlite3.Error as e:
+            print("Database Error", e)
+            return
         
         rows = cursor.fetchall()
         if not rows:
@@ -118,11 +123,15 @@ class Consultant():
             except ValueError:
                 print("Invalid input - Enter Consultant ID in numerics")
                 continue 
+        try:
+            cursor.execute("""
+            SELECT * FROM consultant
+            WHERE consultant_id = ?
+            """,(consultant_id,))
 
-        cursor.execute("""
-        SELECT * FROM consultant
-        WHERE consultant_id = ?
-        """,(consultant_id,))
+        except sqlite3.Error as e:
+            print("Database Error", e)
+            return
 
         row = cursor.fetchone()
         if not row:
@@ -143,16 +152,20 @@ class Consultant():
             try:
                 consultant_id = int(input("Consultant ID:"))
                 if not self.validate_login_id(consultant_id):
+                    print("Consultant ID must be greater than 1")
                     continue 
                 break 
             except ValueError:
-                print("Invalid input - Enter Consultant ID in numerics")
+                print("For Consultant ID use only numbers")
                 continue 
-        
-        cursor.execute("""
-        SELECT * FROM consultant
-        WHERE consultant_id = ?
-        """,(consultant_id,))
+        try:
+            cursor.execute("""
+            SELECT * FROM consultant
+            WHERE consultant_id = ?
+            """,(consultant_id,))
+
+        except sqlite3.Error as e:
+            print("Database Error", e)
         
         row = cursor.fetchone()
         if not row:
@@ -177,22 +190,22 @@ class Consultant():
                 return
             else:
                 while True:
-                    updated_first_name = input("First Name:")
+                    updated_first_name = input("Consultant First Name")
                     if updated_first_name == "":
-                        print("Invalid input")
+                        print("Consultant First Name - Do not leave blank")
                         continue 
                     if not self.validate_name(updated_first_name):
-                        print("Invalid input")
+                        print("Consultant First Name - Use alphabet, if required tap space bar")
                         continue
                     break
 
                 while True:
-                    updated_surname = input("Last Name:")
+                    updated_surname = input("Consultant Last Name:")
                     if updated_surname == "":
-                        print("Invalid input")
+                        print("Consultant Last Name - Do not leave blank")
                         continue 
                     if not self.validate_name(self.surname):
-                        print("Invalid input")
+                        print("Consultant First Name - Use alphabet, if required tap space bar")
                         continue 
                     break 
                     
@@ -204,22 +217,28 @@ class Consultant():
                         break
     
                     except ValueError:
-                        print("Invalid input - Enter Department ID numerically only!")
+                        print("For Department ID use only numbers")
                         continue
             
                 self.first_name = updated_first_name
                 self.surname = updated_surname
                 self.department_id = updated_department_id
 
-                cursor.execute("""
-                UPDATE consultant
-                SET first_name = ?,
-                    surname = ?,
-                    department_id = ?
-                WHERE consultant_id = ?
-                """,(self.first_name,self.surname,self.department_id, consultant_id))
+                try:
+                    cursor.execute("""
+                    UPDATE consultant
+                    SET first_name = ?,
+                        surname = ?,
+                        department_id = ?
+                    WHERE consultant_id = ?
+                    """,(self.first_name,self.surname,self.department_id, consultant_id))
 
-                conn.commit()
+                    conn.commit()
+
+                except sqlite3.Error as e:
+                    print("Database Error", e)
+                    return
+                
                 print("Consultant successfully updated")
                 return
 
@@ -228,16 +247,21 @@ class Consultant():
             try:
                 consultant_id = int(input("Consultant ID:"))
                 if not self.validate_login_id(consultant_id):
+                    print("Consultant ID must be greater than 1")
                     continue 
                 break 
             except ValueError:
-                print("Invalid input - Enter Consultant ID in numerics")
+                print("For Consultant ID use only numbers ")
                 continue 
-        
-        cursor.execute("""
-        SELECT * FROM consultant
-        WHERE consultant_id = ?
-        """,(consultant_id,))
+        try:
+            cursor.execute("""
+            SELECT * FROM consultant
+            WHERE consultant_id = ?
+            """,(consultant_id,))
+
+        except sqlite3.Error as e:
+            print("Database Error", e)
+            return
         
         row = cursor.fetchone()
         if not row:
@@ -260,12 +284,18 @@ class Consultant():
                     print("Consultant deletion aborted")
                     return
                 else:
-                    cursor.execute("""
-                    DELETE FROM consultant
-                    WHERE consultant_id = ?
-                    """,(consultant_id,))
+                    try:
+                        cursor.execute("""
+                        DELETE FROM consultant
+                        WHERE consultant_id = ?
+                        """,(consultant_id,))
 
-                    conn.commit()
+                        conn.commit()
+
+                    except sqlite3.Error as e:
+                        print("Database Error", e)
+                        return
+                    
                     print("Consultant sucesssfully deleted")
                     return
         
