@@ -136,11 +136,15 @@ class Gp:
             except ValueError:
                     print("For GP ID use only numbers")
                     continue
-                
-        cursor.execute("""
-        SELECT * FROM gp
-        WHERE gp_id = ?
-        """,(gp_id,))
+        try:     
+            cursor.execute("""
+            SELECT * FROM gp
+            WHERE gp_id = ?
+            """,(gp_id,))
+
+        except sqlite3.Error as e:
+            print("Database Error", e)
+            return
         
         row = cursor.fetchone()
         if not row:
@@ -167,11 +171,14 @@ class Gp:
             except ValueError:
                 print("For GP ID use only numbers")
                 continue
-                        
-        cursor.execute("""
-        SELECT * FROM gp
-        WHERE gp_id = ?
-        """,(gp_id,))
+        try:              
+            cursor.execute("""
+            SELECT * FROM gp
+            WHERE gp_id = ?
+            """,(gp_id,))
+
+        except sqlite3.Error as e:
+            print("Database Error", e)
                 
         row = cursor.fetchone()
         if not row:
@@ -242,7 +249,7 @@ class Gp:
             except sqlite3.Error as e:
                 print("Database Error", e)
                 return
-        
+    
             print("GP updated successfully")
             return
 
@@ -257,11 +264,14 @@ class Gp:
             except ValueError:
                     print("For GP ID use only numbers")
                     continue
-                
-        cursor.execute("""
-        SELECT * FROM gp
-        WHERE gp_id = ?
-        """,(gp_id,))
+        try:    
+            cursor.execute("""
+            SELECT * FROM gp
+            WHERE gp_id = ?
+            """,(gp_id,))
+
+        except sqlite3.Error as e:
+            print("Database Error", e)
         
         row = cursor.fetchone()
         if not row:
